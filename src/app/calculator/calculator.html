@@ -1,11 +1,9 @@
 <div class="wrapper">
-  <div class="calculator">
+  <div class="calculator" [class.dark]="themeStore.darkMode()">
     <div class="topbar">
-      <div class="theme-switcher">
-        <input type="checkbox" role="switch" />
-      </div>
+      <qa-theme-switcher />
       <button class="button-history" type="button" aria-label="Show history">
-        <svg width="26" height="26">
+        <svg width="26" height="26" aria-hidden="true">
           <use href="/icons.svg#history" />
         </svg>
       </button>

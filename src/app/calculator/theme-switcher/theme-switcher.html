@@ -1,0 +1,17 @@
+<div class="theme-switcher">
+  <input
+    id="switch"
+    type="checkbox"
+    role="switch"
+    [checked]="themeStore.darkMode()"
+    (change)="themeStore.toggle()"
+  />
+  <label for="switch">
+    <svg width="24" height="24" aria-hidden="true">
+      <use href="/icons.svg#moon" />
+    </svg>
+    <svg width="24" height="24" aria-hidden="true">
+      <use href="/icons.svg#sun" />
+    </svg>
+  </label>
+</div>

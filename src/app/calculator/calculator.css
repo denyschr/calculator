@@ -6,6 +6,7 @@
 
 .calculator {
   --color-primary-100: #d7ccfb;
+  --color-primary-300: #997cf7;
   --color-primary-400: #7754f6;
   --color-primary-500: #6236f5;
 
@@ -34,6 +35,9 @@
   --operation-text-color: var(--color-surface-0);
   --operation-background-color: var(--color-primary-500);
   --operation-background-color-active: var(--color-primary-400);
+  --theme-switcher-track-background-color: var(--color-surface-300);
+  --theme-switcher-icon-color: var(--color-primary-300);
+  --theme-switcher-thumb-background-color: var(--color-surface-400);
   --button-history-text-color: var(--color-gray-dark);
   --button-history-background-color-hover: var(--color-primary-100);
 
@@ -47,6 +51,8 @@
     --digit-text-color: var(--color-surface-50);
     --digit-background-color: var(--color-surface-900);
     --digit-background-color-active: var(--color-surface-700);
+    --theme-switcher-track-background-color: var(--color-surface-800);
+    --theme-switcher-thumb-background-color: var(--color-primary-500);
     --button-history-text-color: var(--color-surface-0);
     --button-history-background-color-hover: var(--color-surface-900);
   }
@@ -57,7 +63,6 @@
   min-width: 375px;
   padding: 1.25rem;
   background-color: var(--app-background-color);
-
   .topbar {
     display: flex;
     align-items: center;
@@ -72,8 +77,8 @@
   .button-history {
     display: inline-grid;
     place-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
     color: var(--button-history-text-color);
     border-radius: 0.5rem;
     transition: background-color 0.2s ease-in-out;
@@ -82,10 +87,6 @@
         background-color: var(--button-history-background-color-hover);
       }
     }
-  }
-
-  .theme-switcher {
-    margin-inline: auto;
   }
 
   .display {
@@ -115,7 +116,7 @@
   .key {
     display: inline-grid;
     place-content: center;
-    height: 4.5rem;
+    block-size: 4.5rem;
     font-size: 2rem;
     line-height: 1.25;
     border-radius: 1.5rem;
