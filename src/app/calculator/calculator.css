@@ -32,9 +32,9 @@
   --digit-text-color: var(--color-gray-dark);
   --digit-background-color: var(--color-surface-0);
   --digit-background-color-active: var(--color-surface-300);
-  --operation-text-color: var(--color-surface-0);
-  --operation-background-color: var(--color-primary-500);
-  --operation-background-color-active: var(--color-primary-400);
+  --operator-text-color: var(--color-surface-0);
+  --operator-background-color: var(--color-primary-500);
+  --operator-background-color-active: var(--color-primary-400);
   --theme-switcher-track-background-color: var(--color-surface-300);
   --theme-switcher-icon-color: var(--color-primary-300);
   --theme-switcher-thumb-background-color: var(--color-surface-400);
@@ -44,7 +44,7 @@
   &.dark {
     --app-background-color: var(--color-surface-1000);
     --expression-color: var(--color-surface-600);
-    --current-operand-color: var(--color-surface-50);
+    --result-color: var(--color-surface-50);
     --function-text-color: var(--color-surface-50);
     --function-background-color: var(--color-surface-700);
     --function-background-color-active: var(--color-surface-800);
@@ -101,10 +101,10 @@
     color: var(--expression-color);
   }
 
-  .current-operand {
+  .result {
     font-size: 4.5rem;
     line-height: 1.3;
-    color: var(--current-operand-color);
+    color: var(--result-color);
   }
 
   .keypad {
@@ -140,11 +140,11 @@
     }
   }
 
-  .operation {
-    color: var(--operation-text-color);
-    background-color: var(--operation-background-color);
+  .operator {
+    color: var(--operator-text-color);
+    background-color: var(--operator-background-color);
     &:active {
-      background-color: var(--operation-background-color-active);
+      background-color: var(--operator-background-color-active);
     }
   }
 }
