@@ -36,13 +36,13 @@
       <button class="key operator" type="button" (click)="enterOperator('+')">+</button>
 
       <button class="key digit" type="button">.</button>
-      <button class="key digit" type="button" (click)="enterZero()">0</button>
+      <button class="key digit" type="button" (click)="enterDigit('0')">0</button>
       <button class="key digit" type="button" aria-label="Delete">
         <svg width="27" height="18" aria-hidden="true">
           <use href="/icons.svg#delete" />
         </svg>
       </button>
-      <button class="key operator" type="button">=</button>
+      <button class="key operator" type="button" (click)="enterEquals()">=</button>
     </div>
   </div>
 </div>

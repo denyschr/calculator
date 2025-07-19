@@ -13,6 +13,7 @@
   --color-surface-0: #ffffff;
   --color-surface-50: #f9f9fb;
   --color-surface-100: #f3f2f5;
+  --color-surface-200: #eae9ed;
   --color-surface-300: #d9d8e0;
   --color-surface-400: #b6b2c1;
   --color-surface-600: #645d78;
@@ -28,12 +29,15 @@
   --current-operand-color: var(--color-surface-900);
   --function-text-color: var(--color-gray-dark);
   --function-background-color: var(--color-surface-300);
+  --function-background-color-hover: var(--color-surface-200);
   --function-background-color-active: var(--color-surface-400);
   --digit-text-color: var(--color-gray-dark);
   --digit-background-color: var(--color-surface-0);
+  --digit-background-color-hover: var(--color-surface-400);
   --digit-background-color-active: var(--color-surface-300);
   --operator-text-color: var(--color-surface-0);
   --operator-background-color: var(--color-primary-500);
+  --operator-background-color-hover: var(--color-primary-300);
   --operator-background-color-active: var(--color-primary-400);
   --theme-switcher-track-background-color: var(--color-surface-300);
   --theme-switcher-icon-color: var(--color-primary-300);
@@ -47,9 +51,11 @@
     --result-color: var(--color-surface-50);
     --function-text-color: var(--color-surface-50);
     --function-background-color: var(--color-surface-700);
+    --function-background-color-hover: var(--color-surface-600);
     --function-background-color-active: var(--color-surface-800);
     --digit-text-color: var(--color-surface-50);
     --digit-background-color: var(--color-surface-900);
+    --digit-background-color-hover: var(--color-surface-800);
     --digit-background-color-active: var(--color-surface-700);
     --theme-switcher-track-background-color: var(--color-surface-800);
     --theme-switcher-thumb-background-color: var(--color-primary-500);
@@ -120,13 +126,18 @@
     font-size: 2rem;
     line-height: 1.25;
     border-radius: 1.5rem;
-    cursor: default;
     transition: background-color 0.2s ease-in-out;
   }
 
   .function {
     color: var(--function-text-color);
     background-color: var(--function-background-color);
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: var(--function-background-color-hover);
+      }
+    }
+
     &:active {
       background-color: var(--function-background-color-active);
     }
@@ -135,6 +146,12 @@
   .digit {
     color: var(--digit-text-color);
     background-color: var(--digit-background-color);
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: var(--digit-background-color-hover);
+      }
+    }
+
     &:active {
       background-color: var(--digit-background-color-active);
     }
@@ -143,6 +160,12 @@
   .operator {
     color: var(--operator-text-color);
     background-color: var(--operator-background-color);
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: var(--operator-background-color-hover);
+      }
+    }
+
     &:active {
       background-color: var(--operator-background-color-active);
     }
