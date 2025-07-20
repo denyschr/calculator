@@ -11,7 +11,7 @@ import { ThemeSwitcher } from './theme-switcher/theme-switcher';
 import { ThemeStore } from './theme-switcher/theme-store';
 
 type State = 'INITIAL' | 'LEFT_OPERAND' | 'OPERATOR' | 'RIGHT_OPERAND' | 'EQUALS';
-type InputEvent = 'DIGIT' | 'DOT' | 'OPERATOR' | 'EQUALS';
+type InputEvent = 'DIGIT' | 'DOT' | 'PERCENT' | 'OPERATOR' | 'EQUALS';
 type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 type Operator = '+' | '–' | '×' | '÷';
 
@@ -30,7 +30,6 @@ export class Calculator implements DoCheck {
   protected readonly operator = signal<Operator | null>(null);
   protected readonly rightOperand = signal(0);
   protected readonly display = signal('0');
-  protected readonly hasDot = signal(false);
 
   protected readonly expression = computed(() => {
     const left = this.leftOperand();
@@ -54,7 +53,6 @@ export class Calculator implements DoCheck {
     console.log(`operator: ${this.operator()}`);
     console.log(`rightOperand: ${this.rightOperand()}`);
     console.log(`display: ${this.display()}`);
-    console.log(`hasDot: ${this.hasDot()}`);
   }
 
   protected enterDigit(digit: Digit): void {
@@ -78,6 +76,7 @@ export class Calculator implements DoCheck {
 
   protected enterOperator(operator: Operator): void {
     switch (this.currentState()) {
+      case 'INITIAL':
       case 'LEFT_OPERAND':
       case 'EQUALS':
         this.leftOperand.set(parseFloat(this.display()));
@@ -95,7 +94,6 @@ export class Calculator implements DoCheck {
         this.operator.set(operator);
         break;
     }
-    this.hasDot.set(false);
     this.updateState('OPERATOR');
   }
 
@@ -104,7 +102,6 @@ export class Calculator implements DoCheck {
       this.rightOperand.set(parseFloat(this.display()));
       const result = this.calculate();
       this.display.set(String(result));
-      this.hasDot.set(false);
       this.updateState('EQUALS');
     }
   }
@@ -114,13 +111,11 @@ export class Calculator implements DoCheck {
       case 'INITIAL':
       case 'OPERATOR':
       case 'EQUALS':
-        this.hasDot.set(true);
         this.display.set('0.');
         break;
       case 'LEFT_OPERAND':
       case 'RIGHT_OPERAND':
-        if (!this.hasDot()) {
-          this.hasDot.set(true);
+        if (!this.display().includes('.')) {
           this.display.update((value) => value + '.');
         }
         break;
@@ -129,7 +124,18 @@ export class Calculator implements DoCheck {
   }
 
   protected enterPercent(): void {
-    // ...
+    switch (this.currentState()) {
+      case 'INITIAL':
+      case 'LEFT_OPERAND':
+      case 'EQUALS':
+        this.display.set(String(parseFloat(this.display()) / 100));
+        break;
+      case 'RIGHT_OPERAND':
+        const result = this.calculatePercentage();
+        this.display.set(String(result));
+        break;
+    }
+    this.updateState('PERCENT');
   }
 
   protected clear(): void {
@@ -138,16 +144,27 @@ export class Calculator implements DoCheck {
     this.operator.set(null);
     this.rightOperand.set(0);
     this.display.set('0');
-    this.hasDot.set(false);
+  }
+
+  private calculatePercentage(): number {
+    const left = this.leftOperand();
+    const current = parseFloat(this.display());
+
+    switch (this.operator()) {
+      case '+':
+      case '–':
+        return (left * current) / 100;
+      case '×':
+      case '÷':
+        return current / 100;
+      default:
+        return current / 100;
+    }
   }
 
   private calculate(): number {
     const left = this.leftOperand();
     const right = this.rightOperand();
-
-    if (Number.isNaN(left) || Number.isNaN(right)) {
-      throw new Error('Invalid operand');
-    }
 
     switch (this.operator()) {
       case '+':
@@ -168,6 +185,8 @@ export class Calculator implements DoCheck {
       case 'INITIAL':
         if (inputEvent === 'DIGIT' || inputEvent === 'DOT') {
           this.currentState.set('LEFT_OPERAND');
+        } else if (inputEvent === 'OPERATOR') {
+          this.currentState.set('OPERATOR');
         }
         break;
       case 'LEFT_OPERAND':
@@ -192,6 +211,8 @@ export class Calculator implements DoCheck {
           this.currentState.set('LEFT_OPERAND');
         } else if (inputEvent === 'OPERATOR') {
           this.currentState.set('OPERATOR');
+        } else if (inputEvent === 'PERCENT') {
+          this.currentState.set('INITIAL');
         }
         break;
     }
