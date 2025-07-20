@@ -108,6 +108,8 @@
   }
 
   .result {
+    white-space: nowrap;
+    overflow: hidden;
     font-size: 4.5rem;
     line-height: 1.3;
     color: var(--result-color);

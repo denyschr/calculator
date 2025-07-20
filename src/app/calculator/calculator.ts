@@ -30,6 +30,7 @@ export class Calculator implements DoCheck {
   protected readonly operator = signal<Operator | null>(null);
   protected readonly rightOperand = signal(0);
   protected readonly display = signal('0');
+  protected readonly hasDot = signal(false);
 
   protected readonly expression = computed(() => {
     const left = this.leftOperand();
@@ -53,6 +54,7 @@ export class Calculator implements DoCheck {
     console.log(`operator: ${this.operator()}`);
     console.log(`rightOperand: ${this.rightOperand()}`);
     console.log(`display: ${this.display()}`);
+    console.log(`hasDot: ${this.hasDot()}`);
   }
 
   protected enterDigit(digit: Digit): void {
@@ -78,11 +80,12 @@ export class Calculator implements DoCheck {
     switch (this.currentState()) {
       case 'LEFT_OPERAND':
       case 'EQUALS':
-        this.leftOperand.set(Number(this.display()));
+        this.leftOperand.set(parseFloat(this.display()));
+        this.display.set(String(this.leftOperand()));
         this.operator.set(operator);
         break;
       case 'RIGHT_OPERAND':
-        this.rightOperand.set(Number(this.display()));
+        this.rightOperand.set(parseFloat(this.display()));
         const result = this.calculate();
         this.display.set(String(result));
         this.leftOperand.set(result);
@@ -92,20 +95,37 @@ export class Calculator implements DoCheck {
         this.operator.set(operator);
         break;
     }
+    this.hasDot.set(false);
     this.updateState('OPERATOR');
   }
 
   protected enterEquals(): void {
     if (this.currentState() === 'RIGHT_OPERAND') {
-      this.rightOperand.set(Number(this.display()));
+      this.rightOperand.set(parseFloat(this.display()));
       const result = this.calculate();
       this.display.set(String(result));
+      this.hasDot.set(false);
       this.updateState('EQUALS');
     }
   }
 
   protected enterDot(): void {
-    // ...
+    switch (this.currentState()) {
+      case 'INITIAL':
+      case 'OPERATOR':
+      case 'EQUALS':
+        this.hasDot.set(true);
+        this.display.set('0.');
+        break;
+      case 'LEFT_OPERAND':
+      case 'RIGHT_OPERAND':
+        if (!this.hasDot()) {
+          this.hasDot.set(true);
+          this.display.update((value) => value + '.');
+        }
+        break;
+    }
+    this.updateState('DOT');
   }
 
   protected enterPercent(): void {
@@ -118,6 +138,7 @@ export class Calculator implements DoCheck {
     this.operator.set(null);
     this.rightOperand.set(0);
     this.display.set('0');
+    this.hasDot.set(false);
   }
 
   private calculate(): number {
@@ -128,32 +149,24 @@ export class Calculator implements DoCheck {
       throw new Error('Invalid operand');
     }
 
-    let result: number;
-
     switch (this.operator()) {
       case '+':
-        result = left + right;
-        break;
+        return left + right;
       case '–':
-        result = left - right;
-        break;
+        return left - right;
       case '×':
-        result = left * right;
-        break;
+        return left * right;
       case '÷':
-        result = left / right;
-        break;
+        return left / right;
       default:
         throw new Error('Invalid operator');
     }
-
-    return result;
   }
 
   private updateState(inputEvent: InputEvent): void {
     switch (this.currentState()) {
       case 'INITIAL':
-        if (inputEvent === 'DIGIT') {
+        if (inputEvent === 'DIGIT' || inputEvent === 'DOT') {
           this.currentState.set('LEFT_OPERAND');
         }
         break;
@@ -163,7 +176,7 @@ export class Calculator implements DoCheck {
         }
         break;
       case 'OPERATOR':
-        if (inputEvent === 'DIGIT') {
+        if (inputEvent === 'DIGIT' || inputEvent === 'DOT') {
           this.currentState.set('RIGHT_OPERAND');
         }
         break;
@@ -175,7 +188,7 @@ export class Calculator implements DoCheck {
         }
         break;
       case 'EQUALS':
-        if (inputEvent === 'DIGIT') {
+        if (inputEvent === 'DIGIT' || inputEvent === 'DOT') {
           this.currentState.set('LEFT_OPERAND');
         } else if (inputEvent === 'OPERATOR') {
           this.currentState.set('OPERATOR');
