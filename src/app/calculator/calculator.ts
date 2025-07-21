@@ -85,7 +85,7 @@ export class Calculator implements DoCheck {
         break;
       case 'RIGHT_OPERAND':
         this.rightOperand.set(parseFloat(this.display()));
-        const result = this.calculate();
+        const result = this.evaluate();
         this.display.set(String(result));
         this.leftOperand.set(result);
         this.operator.set(operator);
@@ -100,7 +100,7 @@ export class Calculator implements DoCheck {
   protected enterEquals(): void {
     if (this.currentState() === 'RIGHT_OPERAND') {
       this.rightOperand.set(parseFloat(this.display()));
-      const result = this.calculate();
+      const result = this.evaluate();
       this.display.set(String(result));
       this.updateState('EQUALS');
     }
@@ -173,7 +173,7 @@ export class Calculator implements DoCheck {
     }
   }
 
-  private calculate(): number {
+  private evaluate(): number {
     const left = this.leftOperand();
     const right = this.rightOperand();
 

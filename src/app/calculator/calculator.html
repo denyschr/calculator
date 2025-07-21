@@ -15,34 +15,53 @@
     </div>
 
     <div class="keypad">
-      <button class="key function" type="button" (click)="clear()">C</button>
-      <button class="key function" type="button" (click)="enterNegativeSign()">+/&minus;</button>
-      <button class="key function" type="button" (click)="enterPercent()">%</button>
-      <button class="key operator" type="button" (click)="enterOperator('÷')">÷</button>
+      <button class="key function" type="button" aria-label="clear" (click)="clear()">C</button>
+      <button
+        class="key function"
+        type="button"
+        aria-label="negative sign"
+        (click)="enterNegativeSign()"
+      >
+        +/–
+      </button>
+      <button class="key function" type="button" aria-label="percent" (click)="enterPercent()">
+        %
+      </button>
+      <button class="key operator" type="button" aria-label="divide" (click)="enterOperator('÷')">
+        ÷
+      </button>
 
       <button class="key digit" type="button" (click)="enterDigit('7')">7</button>
       <button class="key digit" type="button" (click)="enterDigit('8')">8</button>
       <button class="key digit" type="button" (click)="enterDigit('9')">9</button>
-      <button class="key operator" type="button" (click)="enterOperator('×')">×</button>
+      <button class="key operator" type="button" aria-label="multiply" (click)="enterOperator('×')">
+        ×
+      </button>
 
       <button class="key digit" type="button" (click)="enterDigit('4')">4</button>
       <button class="key digit" type="button" (click)="enterDigit('5')">5</button>
       <button class="key digit" type="button" (click)="enterDigit('6')">6</button>
-      <button class="key operator" type="button" (click)="enterOperator('–')">–</button>
+      <button class="key operator" type="button" aria-label="minus" (click)="enterOperator('–')">
+        –
+      </button>
 
       <button class="key digit" type="button" (click)="enterDigit('1')">1</button>
       <button class="key digit" type="button" (click)="enterDigit('2')">2</button>
       <button class="key digit" type="button" (click)="enterDigit('3')">3</button>
-      <button class="key operator" type="button" (click)="enterOperator('+')">+</button>
+      <button class="key operator" type="button" aria-label="plus" (click)="enterOperator('+')">
+        +
+      </button>
 
       <button class="key digit" type="button" (click)="enterDot()">.</button>
       <button class="key digit" type="button" (click)="enterDigit('0')">0</button>
-      <button class="key digit" type="button" aria-label="Delete">
+      <button class="key digit" type="button" aria-label="delete entry">
         <svg width="27" height="18" aria-hidden="true">
           <use href="/icons.svg#delete" />
         </svg>
       </button>
-      <button class="key operator" type="button" (click)="enterEquals()">=</button>
+      <button class="key operator" type="button" aria-label="equals" (click)="enterEquals()">
+        =
+      </button>
     </div>
   </div>
 </div>
