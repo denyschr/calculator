@@ -11,7 +11,7 @@ import { ThemeSwitcher } from './theme-switcher/theme-switcher';
 import { ThemeStore } from './theme-switcher/theme-store';
 
 type State = 'INITIAL' | 'LEFT_OPERAND' | 'OPERATOR' | 'RIGHT_OPERAND' | 'EQUALS';
-type InputEvent = 'DIGIT' | 'DOT' | 'PERCENT' | 'OPERATOR' | 'EQUALS';
+type InputEvent = 'DIGIT' | 'DOT' | 'PERCENT' | 'NEGATIVE_SIGN' | 'OPERATOR' | 'EQUALS';
 type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 type Operator = '+' | '–' | '×' | '÷';
 
@@ -65,7 +65,7 @@ export class Calculator implements DoCheck {
       case 'LEFT_OPERAND':
       case 'RIGHT_OPERAND':
         if (this.display() !== '0') {
-          this.display.update((value) => value + digit);
+          this.display.update((operand) => operand + digit);
         } else {
           this.display.set(digit);
         }
@@ -116,7 +116,7 @@ export class Calculator implements DoCheck {
       case 'LEFT_OPERAND':
       case 'RIGHT_OPERAND':
         if (!this.display().includes('.')) {
-          this.display.update((value) => value + '.');
+          this.display.update((operand) => operand + '.');
         }
         break;
     }
@@ -138,6 +138,18 @@ export class Calculator implements DoCheck {
     this.updateState('PERCENT');
   }
 
+  protected enterNegativeSign(): void {
+    switch (this.currentState()) {
+      case 'INITIAL':
+      case 'LEFT_OPERAND':
+      case 'RIGHT_OPERAND':
+      case 'EQUALS':
+        this.display.update((operand) => String(-1 * parseFloat(operand)));
+        break;
+    }
+    this.updateState('NEGATIVE_SIGN');
+  }
+
   protected clear(): void {
     this.currentState.set('INITIAL');
     this.leftOperand.set(0);
@@ -156,7 +168,6 @@ export class Calculator implements DoCheck {
         return (left * current) / 100;
       case '×':
       case '÷':
-        return current / 100;
       default:
         return current / 100;
     }
@@ -211,7 +222,7 @@ export class Calculator implements DoCheck {
           this.currentState.set('LEFT_OPERAND');
         } else if (inputEvent === 'OPERATOR') {
           this.currentState.set('OPERATOR');
-        } else if (inputEvent === 'PERCENT') {
+        } else if (inputEvent === 'PERCENT' || inputEvent === 'NEGATIVE_SIGN') {
           this.currentState.set('INITIAL');
         }
         break;
