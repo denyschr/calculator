@@ -131,7 +131,7 @@ export class Calculator implements DoCheck {
         this.display.set(String(parseFloat(this.display()) / 100));
         break;
       case 'RIGHT_OPERAND':
-        const result = this.calculatePercentage();
+        const result = this.percentage();
         this.display.set(String(result));
         break;
     }
@@ -150,6 +150,24 @@ export class Calculator implements DoCheck {
     this.updateState('NEGATIVE_SIGN');
   }
 
+  protected deleteEntry(): void {
+    switch (this.currentState()) {
+      case 'INITIAL':
+      case 'LEFT_OPERAND':
+      case 'RIGHT_OPERAND':
+        const current = this.display();
+        if (current === '0') {
+          return;
+        }
+        if (current.length === 1 || (current.length === 2 && current.startsWith('-'))) {
+          this.display.set('0');
+        } else if (current.length > 1) {
+          this.display.update((operand) => operand.slice(0, -1));
+        }
+        break;
+    }
+  }
+
   protected clear(): void {
     this.currentState.set('INITIAL');
     this.leftOperand.set(0);
@@ -158,7 +176,7 @@ export class Calculator implements DoCheck {
     this.display.set('0');
   }
 
-  private calculatePercentage(): number {
+  private percentage(): number {
     const left = this.leftOperand();
     const current = parseFloat(this.display());
 

@@ -9,7 +9,7 @@
       </button>
     </div>
 
-    <div class="display">
+    <div class="screen">
       <div class="expression">{{ expression() }}</div>
       <div class="result">{{ display() }}</div>
     </div>
@@ -54,7 +54,7 @@
 
       <button class="key digit" type="button" (click)="enterDot()">.</button>
       <button class="key digit" type="button" (click)="enterDigit('0')">0</button>
-      <button class="key digit" type="button" aria-label="delete entry">
+      <button class="key digit" type="button" aria-label="delete entry" (click)="deleteEntry()">
         <svg width="27" height="18" aria-hidden="true">
           <use href="/icons.svg#delete" />
         </svg>
