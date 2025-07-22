@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DoCheck,
-  inject,
-  signal
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
 import { ThemeSwitcher } from './theme-switcher/theme-switcher';
 import { ThemeStore } from './theme-switcher/theme-store';
@@ -14,6 +7,11 @@ type State = 'INITIAL' | 'LEFT_OPERAND' | 'OPERATOR' | 'RIGHT_OPERAND' | 'EQUALS
 type InputEvent = 'DIGIT' | 'DOT' | 'PERCENT' | 'NEGATIVE_SIGN' | 'OPERATOR' | 'EQUALS';
 type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 type Operator = '+' | '–' | '×' | '÷';
+type HistoryEntry = {
+  id: number;
+  expression: string;
+  result: string;
+};
 
 @Component({
   selector: 'qa-calculator',
@@ -22,7 +20,7 @@ type Operator = '+' | '–' | '×' | '÷';
   imports: [ThemeSwitcher],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Calculator implements DoCheck {
+export class Calculator {
   protected readonly themeStore = inject(ThemeStore);
 
   protected readonly currentState = signal<State>('INITIAL');
@@ -30,6 +28,8 @@ export class Calculator implements DoCheck {
   protected readonly operator = signal<Operator | null>(null);
   protected readonly rightOperand = signal(0);
   protected readonly display = signal('0');
+  protected readonly history = signal<HistoryEntry[]>([]);
+  protected readonly historyVisible = signal(false);
 
   protected readonly expression = computed(() => {
     const left = this.leftOperand();
@@ -47,12 +47,8 @@ export class Calculator implements DoCheck {
     }
   });
 
-  public ngDoCheck(): void {
-    console.log(`currentState: ${this.currentState()}`);
-    console.log(`leftOperand: ${this.leftOperand()}`);
-    console.log(`operator: ${this.operator()}`);
-    console.log(`rightOperand: ${this.rightOperand()}`);
-    console.log(`display: ${this.display()}`);
+  protected toggleHistory(): void {
+    this.historyVisible.update((visible) => !visible);
   }
 
   protected enterDigit(digit: Digit): void {
@@ -81,19 +77,16 @@ export class Calculator implements DoCheck {
       case 'EQUALS':
         this.leftOperand.set(parseFloat(this.display()));
         this.display.set(String(this.leftOperand()));
-        this.operator.set(operator);
         break;
       case 'RIGHT_OPERAND':
         this.rightOperand.set(parseFloat(this.display()));
         const result = this.evaluate();
         this.display.set(String(result));
+        this.addToHistory();
         this.leftOperand.set(result);
-        this.operator.set(operator);
-        break;
-      case 'OPERATOR':
-        this.operator.set(operator);
         break;
     }
+    this.operator.set(operator);
     this.updateState('OPERATOR');
   }
 
@@ -102,6 +95,7 @@ export class Calculator implements DoCheck {
       this.rightOperand.set(parseFloat(this.display()));
       const result = this.evaluate();
       this.display.set(String(result));
+      this.addToHistory();
       this.updateState('EQUALS');
     }
   }
@@ -207,6 +201,15 @@ export class Calculator implements DoCheck {
       default:
         throw new Error('Invalid operator');
     }
+  }
+
+  private addToHistory(): void {
+    const entry = {
+      id: Date.now(),
+      expression: `${this.leftOperand()} ${this.operator()} ${this.rightOperand()} =`,
+      result: this.display()
+    };
+    this.history.update((entries) => [entry, ...entries]);
   }
 
   private updateState(inputEvent: InputEvent): void {

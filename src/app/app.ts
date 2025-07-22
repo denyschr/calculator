@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
 import { Calculator } from './calculator/calculator';
 
 @Component({
@@ -8,6 +9,4 @@ import { Calculator } from './calculator/calculator';
   imports: [Calculator],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class App {
-  protected readonly title = signal('quick-apps');
-}
+export class App {}

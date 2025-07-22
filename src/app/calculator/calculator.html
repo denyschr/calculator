@@ -1,8 +1,16 @@
 <div class="wrapper">
   <div class="calculator" [class.dark]="themeStore.darkMode()">
+    <div class="overlay" [class.show]="historyVisible()" (click)="historyVisible.set(false)"></div>
+
     <div class="topbar">
-      <qa-theme-switcher />
-      <button class="button-history" type="button" aria-label="Show history">
+      <qa-theme-switcher style="padding-inline-start: var(--button-history-size)" />
+      <button
+        class="button-history"
+        type="button"
+        title="History"
+        aria-label="Show history"
+        (click)="toggleHistory()"
+      >
         <svg width="26" height="26" aria-hidden="true">
           <use href="/icons.svg#history" />
         </svg>
@@ -62,6 +70,18 @@
       <button class="key operator" type="button" aria-label="equals" (click)="enterEquals()">
         =
       </button>
+    </div>
+
+    <div class="history" [class.show]="historyVisible()">
+      @if (history().length === 0) {
+        <p class="no-history-message">There's no history yet.</p>
+      }
+      @for (entry of history(); track entry.id) {
+        <div class="entry">
+          <div class="entry-expression">{{ entry.expression }}</div>
+          <div class="entry-result">{{ entry.result }}</div>
+        </div>
+      }
     </div>
   </div>
 </div>
