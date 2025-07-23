@@ -2,86 +2,21 @@
   <div class="calculator" [class.dark]="themeStore.darkMode()">
     <div class="overlay" [class.show]="historyVisible()" (click)="historyVisible.set(false)"></div>
 
-    <div class="topbar">
-      <qa-theme-switcher style="padding-inline-start: var(--button-history-size)" />
-      <button
-        class="button-history"
-        type="button"
-        title="History"
-        aria-label="Show history"
-        (click)="toggleHistory()"
-      >
-        <svg width="26" height="26" aria-hidden="true">
-          <use href="/icons.svg#history" />
-        </svg>
-      </button>
-    </div>
+    <qa-calculator-topbar (historyToggled)="toggleHistory()" />
 
-    <div class="screen">
-      <div class="expression">{{ expression() }}</div>
-      <div class="result">{{ display() }}</div>
-    </div>
+    <qa-calculator-screen [expression]="expression()" [result]="display()" />
 
-    <div class="keypad">
-      <button class="key function" type="button" aria-label="clear" (click)="clear()">C</button>
-      <button
-        class="key function"
-        type="button"
-        aria-label="negative sign"
-        (click)="enterNegativeSign()"
-      >
-        +/–
-      </button>
-      <button class="key function" type="button" aria-label="percent" (click)="enterPercent()">
-        %
-      </button>
-      <button class="key operator" type="button" aria-label="divide" (click)="enterOperator('÷')">
-        ÷
-      </button>
+    <qa-calculator-keypad
+      (digitEntered)="enterDigit($event)"
+      (operatorEntered)="enterOperator($event)"
+      (dotEntered)="enterDot()"
+      (percentEntered)="enterPercent()"
+      (negativeSignEntered)="enterNegativeSign()"
+      (equalsEntered)="enterEquals()"
+      (cleared)="clear()"
+      (deleted)="deleteEntry()"
+    />
 
-      <button class="key digit" type="button" (click)="enterDigit('7')">7</button>
-      <button class="key digit" type="button" (click)="enterDigit('8')">8</button>
-      <button class="key digit" type="button" (click)="enterDigit('9')">9</button>
-      <button class="key operator" type="button" aria-label="multiply" (click)="enterOperator('×')">
-        ×
-      </button>
-
-      <button class="key digit" type="button" (click)="enterDigit('4')">4</button>
-      <button class="key digit" type="button" (click)="enterDigit('5')">5</button>
-      <button class="key digit" type="button" (click)="enterDigit('6')">6</button>
-      <button class="key operator" type="button" aria-label="minus" (click)="enterOperator('–')">
-        –
-      </button>
-
-      <button class="key digit" type="button" (click)="enterDigit('1')">1</button>
-      <button class="key digit" type="button" (click)="enterDigit('2')">2</button>
-      <button class="key digit" type="button" (click)="enterDigit('3')">3</button>
-      <button class="key operator" type="button" aria-label="plus" (click)="enterOperator('+')">
-        +
-      </button>
-
-      <button class="key digit" type="button" (click)="enterDot()">.</button>
-      <button class="key digit" type="button" (click)="enterDigit('0')">0</button>
-      <button class="key digit" type="button" aria-label="delete entry" (click)="deleteEntry()">
-        <svg width="27" height="18" aria-hidden="true">
-          <use href="/icons.svg#delete" />
-        </svg>
-      </button>
-      <button class="key operator" type="button" aria-label="equals" (click)="enterEquals()">
-        =
-      </button>
-    </div>
-
-    <div class="history" [class.show]="historyVisible()">
-      @if (history().length === 0) {
-        <p class="no-history-message">There's no history yet.</p>
-      }
-      @for (entry of history(); track entry.id) {
-        <div class="entry">
-          <div class="entry-expression">{{ entry.expression }}</div>
-          <div class="entry-result">{{ entry.result }}</div>
-        </div>
-      }
-    </div>
+    <qa-calculator-history [visible]="historyVisible()" [entries]="history()" />
   </div>
 </div>

@@ -1,0 +1,48 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1010;
+  width: 100%;
+  height: 50%;
+  padding: 1.25rem;
+  translate: 0 1.25rem;
+  visibility: hidden;
+  opacity: 0;
+  overflow-y: auto;
+  font-size: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--app-background-color);
+  transition:
+    translate 0.2s ease-in-out,
+    visibility 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
+  &.show {
+    translate: 0;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.no-history-message {
+  font-size: 1rem;
+  color: var(--no-history-message-color);
+}
+
+.entry {
+  overflow-wrap: break-word;
+  text-align: right;
+  .expression {
+    font-size: 1.25rem;
+    color: var(--expression-color);
+  }
+
+  .result {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--result-color);
+  }
+}

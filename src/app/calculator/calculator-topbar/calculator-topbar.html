@@ -1,0 +1,14 @@
+<div class="topbar">
+  <qa-theme-switcher style="padding-inline-start: var(--button-history-size)" />
+  <button
+    class="button-history"
+    type="button"
+    title="History"
+    aria-label="Show history"
+    (click)="historyToggled.emit()"
+  >
+    <svg width="26" height="26" aria-hidden="true">
+      <use href="/icons.svg#history" />
+    </svg>
+  </button>
+</div>

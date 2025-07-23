@@ -1,29 +1,23 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 
-import { ThemeSwitcher } from './theme-switcher/theme-switcher';
-import { ThemeStore } from './theme-switcher/theme-store';
-
-type State = 'INITIAL' | 'LEFT_OPERAND' | 'OPERATOR' | 'RIGHT_OPERAND' | 'EQUALS';
-type InputEvent = 'DIGIT' | 'DOT' | 'PERCENT' | 'NEGATIVE_SIGN' | 'OPERATOR' | 'EQUALS';
-type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
-type Operator = '+' | '–' | '×' | '÷';
-type HistoryEntry = {
-  id: number;
-  expression: string;
-  result: string;
-};
+import { ThemeStore } from './theme/theme-store';
+import { CalculatorHistory } from './calculator-history/calculator-history';
+import { CalculatorEvent, CalculatorState, Digit, HistoryEntry, Operator } from './types';
+import { CalculatorKeypad } from './calculator-keypad/calculator-keypad';
+import { CalculatorScreen } from './calculator-screen/calculator-screen';
+import { CalculatorTopbar } from './calculator-topbar/calculator-topbar';
 
 @Component({
   selector: 'qa-calculator',
   templateUrl: './calculator.html',
   styleUrl: './calculator.css',
-  imports: [ThemeSwitcher],
+  imports: [CalculatorHistory, CalculatorKeypad, CalculatorScreen, CalculatorTopbar],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Calculator {
   protected readonly themeStore = inject(ThemeStore);
 
-  protected readonly currentState = signal<State>('INITIAL');
+  protected readonly currentState = signal<CalculatorState>('INITIAL');
   protected readonly leftOperand = signal(0);
   protected readonly operator = signal<Operator | null>(null);
   protected readonly rightOperand = signal(0);
@@ -212,38 +206,38 @@ export class Calculator {
     this.history.update((entries) => [entry, ...entries]);
   }
 
-  private updateState(inputEvent: InputEvent): void {
+  private updateState(event: CalculatorEvent): void {
     switch (this.currentState()) {
       case 'INITIAL':
-        if (inputEvent === 'DIGIT' || inputEvent === 'DOT') {
+        if (event === 'DIGIT' || event === 'DOT') {
           this.currentState.set('LEFT_OPERAND');
-        } else if (inputEvent === 'OPERATOR') {
+        } else if (event === 'OPERATOR') {
           this.currentState.set('OPERATOR');
         }
         break;
       case 'LEFT_OPERAND':
-        if (inputEvent === 'OPERATOR') {
+        if (event === 'OPERATOR') {
           this.currentState.set('OPERATOR');
         }
         break;
       case 'OPERATOR':
-        if (inputEvent === 'DIGIT' || inputEvent === 'DOT') {
+        if (event === 'DIGIT' || event === 'DOT') {
           this.currentState.set('RIGHT_OPERAND');
         }
         break;
       case 'RIGHT_OPERAND':
-        if (inputEvent === 'OPERATOR') {
+        if (event === 'OPERATOR') {
           this.currentState.set('OPERATOR');
-        } else if (inputEvent === 'EQUALS') {
+        } else if (event === 'EQUALS') {
           this.currentState.set('EQUALS');
         }
         break;
       case 'EQUALS':
-        if (inputEvent === 'DIGIT' || inputEvent === 'DOT') {
+        if (event === 'DIGIT' || event === 'DOT') {
           this.currentState.set('LEFT_OPERAND');
-        } else if (inputEvent === 'OPERATOR') {
+        } else if (event === 'OPERATOR') {
           this.currentState.set('OPERATOR');
-        } else if (inputEvent === 'PERCENT' || inputEvent === 'NEGATIVE_SIGN') {
+        } else if (event === 'PERCENT' || event === 'NEGATIVE_SIGN') {
           this.currentState.set('INITIAL');
         }
         break;
