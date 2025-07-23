@@ -13,8 +13,8 @@
   user-select: none;
   > input {
     position: absolute;
-    width: 0;
-    height: 0;
+    width: 1px;
+    height: 1px;
     opacity: 0;
     &:checked + label {
       &::before {
@@ -22,6 +22,11 @@
           var(--track-inline-size) - (var(--track-padding) * 2) - var(--thumb-size)
         );
       }
+    }
+
+    &:focus-visible + label {
+      outline: 3px solid var(--theme-switcher-outline-color);
+      outline-offset: 3px;
     }
   }
 

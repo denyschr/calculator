@@ -41,6 +41,7 @@
   --operator-background-color: var(--color-primary-500);
   --operator-background-color-hover: var(--color-primary-300);
   --operator-background-color-active: var(--color-primary-400);
+  --theme-switcher-outline-color: var(--color-gray-dark);
   --theme-switcher-track-background-color: var(--color-surface-300);
   --theme-switcher-icon-color: var(--color-primary-300);
   --theme-switcher-thumb-background-color: var(--color-surface-400);
@@ -62,6 +63,7 @@
     --digit-background-color: var(--color-surface-900);
     --digit-background-color-hover: var(--color-surface-800);
     --digit-background-color-active: var(--color-surface-700);
+    --theme-switcher-outline-color: var(--color-surface-0);
     --theme-switcher-track-background-color: var(--color-surface-800);
     --theme-switcher-thumb-background-color: var(--color-primary-500);
     --button-history-text-color: var(--color-surface-0);
