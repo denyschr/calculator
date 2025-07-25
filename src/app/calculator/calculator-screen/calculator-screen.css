@@ -1,0 +1,17 @@
+.screen {
+  margin-block-end: 1rem;
+  padding-block-start: 8rem;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  text-align: right;
+  line-height: 1;
+  .expression {
+    font-size: 2.5rem;
+    color: var(--expression-color);
+  }
+
+  .result {
+    font-size: 4.5rem;
+    color: var(--result-color);
+  }
+}

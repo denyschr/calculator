@@ -1,0 +1,101 @@
+.wrapper {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  padding: 0.5rem;
+}
+
+.calculator {
+  --color-primary-100: #d7ccfb;
+  --color-primary-300: #997cf7;
+  --color-primary-400: #7754f6;
+  --color-primary-500: #6236f5;
+
+  --color-surface-0: #ffffff;
+  --color-surface-50: #f9f9fb;
+  --color-surface-100: #f3f2f5;
+  --color-surface-200: #eae9ed;
+  --color-surface-300: #d9d8e0;
+  --color-surface-400: #b6b2c1;
+  --color-surface-600: #645d78;
+  --color-surface-700: #3e345a;
+  --color-surface-800: #2e244f;
+  --color-surface-900: #221745;
+  --color-surface-1000: #0d0231;
+
+  --color-gray-dark: #19191b;
+
+  --app-background-color: var(--color-surface-100);
+  --no-history-message-color: var(--color-gray-dark);
+  --expression-color: var(--color-surface-400);
+  --current-operand-color: var(--color-surface-900);
+  --function-text-color: var(--color-gray-dark);
+  --function-background-color: var(--color-surface-300);
+  --function-background-color-hover: var(--color-surface-200);
+  --function-background-color-active: var(--color-surface-400);
+  --digit-text-color: var(--color-gray-dark);
+  --digit-background-color: var(--color-surface-0);
+  --digit-background-color-hover: var(--color-surface-400);
+  --digit-background-color-active: var(--color-surface-300);
+  --operator-text-color: var(--color-surface-0);
+  --operator-background-color: var(--color-primary-500);
+  --operator-background-color-hover: var(--color-primary-300);
+  --operator-background-color-active: var(--color-primary-400);
+  --theme-switcher-outline-color: var(--color-gray-dark);
+  --theme-switcher-track-background-color: var(--color-surface-300);
+  --theme-switcher-icon-color: var(--color-primary-300);
+  --theme-switcher-thumb-background-color: var(--color-surface-400);
+  --button-history-text-color: var(--color-gray-dark);
+  --button-history-background-color-hover: var(--color-primary-100);
+
+  --button-history-size: 2.5rem;
+
+  &.dark {
+    --app-background-color: var(--color-surface-1000);
+    --no-history-message-color: var(--color-surface-50);
+    --expression-color: var(--color-surface-600);
+    --result-color: var(--color-surface-50);
+    --function-text-color: var(--color-surface-50);
+    --function-background-color: var(--color-surface-700);
+    --function-background-color-hover: var(--color-surface-600);
+    --function-background-color-active: var(--color-surface-800);
+    --digit-text-color: var(--color-surface-50);
+    --digit-background-color: var(--color-surface-900);
+    --digit-background-color-hover: var(--color-surface-800);
+    --digit-background-color-active: var(--color-surface-700);
+    --theme-switcher-outline-color: var(--color-surface-0);
+    --theme-switcher-track-background-color: var(--color-surface-800);
+    --theme-switcher-thumb-background-color: var(--color-primary-500);
+    --button-history-text-color: var(--color-surface-0);
+    --button-history-background-color-hover: var(--color-surface-900);
+  }
+
+  position: relative;
+  width: 100%;
+  max-width: 768px;
+  min-width: 375px;
+  padding: 1.25rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: var(--app-background-color);
+  transition: background-color 0.2s ease-in-out;
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    user-select: none;
+    background-color: #000000;
+    transition:
+      visibility 0.2s ease-in-out,
+      opacity 0.2s ease-in-out;
+    &.show {
+      visibility: visible;
+      opacity: 0.5;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+<div class="keypad">
+  <button class="key function" type="button" aria-label="clear" (click)="cleared.emit()">C</button>
+  <button
+    class="key function"
+    type="button"
+    aria-label="negative sign"
+    (click)="negativeSignEntered.emit()"
+  >
+    +/–
+  </button>
+  <button class="key function" type="button" aria-label="percent" (click)="percentEntered.emit()">
+    %
+  </button>
+  <button
+    class="key operator"
+    type="button"
+    aria-label="divide"
+    (click)="operatorEntered.emit('÷')"
+  >
+    ÷
+  </button>
+
+  <button class="key digit" type="button" (click)="digitEntered.emit('7')">7</button>
+  <button class="key digit" type="button" (click)="digitEntered.emit('8')">8</button>
+  <button class="key digit" type="button" (click)="digitEntered.emit('9')">9</button>
+  <button
+    class="key operator"
+    type="button"
+    aria-label="multiply"
+    (click)="operatorEntered.emit('×')"
+  >
+    ×
+  </button>
+
+  <button class="key digit" type="button" (click)="digitEntered.emit('4')">4</button>
+  <button class="key digit" type="button" (click)="digitEntered.emit('5')">5</button>
+  <button class="key digit" type="button" (click)="digitEntered.emit('6')">6</button>
+  <button class="key operator" type="button" aria-label="minus" (click)="operatorEntered.emit('–')">
+    –
+  </button>
+
+  <button class="key digit" type="button" (click)="digitEntered.emit('1')">1</button>
+  <button class="key digit" type="button" (click)="digitEntered.emit('2')">2</button>
+  <button class="key digit" type="button" (click)="digitEntered.emit('3')">3</button>
+  <button class="key operator" type="button" aria-label="plus" (click)="operatorEntered.emit('+')">
+    +
+  </button>
+
+  <button class="key digit" type="button" (click)="dotEntered.emit()">.</button>
+  <button class="key digit" type="button" (click)="digitEntered.emit('0')">0</button>
+  <button class="key digit" type="button" aria-label="delete entry" (click)="deleted.emit()">
+    <svg width="27" height="18" aria-hidden="true">
+      <use href="/icons.svg#delete" />
+    </svg>
+  </button>
+  <button class="key operator" type="button" aria-label="equals" (click)="equalsEntered.emit()">
+    =
+  </button>
+</div>

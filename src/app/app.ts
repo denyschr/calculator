@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
   selector: 'qa-root',
-  imports: [],
   templateUrl: './app.html',
   styleUrl: './app.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [RouterOutlet]
 })
-export class App {
-  protected readonly title = signal('quick-apps');
-}
+export class App {}

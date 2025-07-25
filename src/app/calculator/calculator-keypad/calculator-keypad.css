@@ -1,0 +1,58 @@
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.key {
+  display: inline-grid;
+  place-content: center;
+  block-size: 4.5rem;
+  user-select: none;
+  font-size: 2rem;
+  line-height: 1.25;
+  border-radius: 1.5rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.function {
+  color: var(--function-text-color);
+  background-color: var(--function-background-color);
+  @media (any-hover: hover) {
+    &:hover {
+      background-color: var(--function-background-color-hover);
+    }
+  }
+
+  &:active {
+    background-color: var(--function-background-color-active);
+  }
+}
+
+.digit {
+  color: var(--digit-text-color);
+  background-color: var(--digit-background-color);
+  @media (any-hover: hover) {
+    &:hover {
+      background-color: var(--digit-background-color-hover);
+    }
+  }
+
+  &:active {
+    background-color: var(--digit-background-color-active);
+  }
+}
+
+.operator {
+  color: var(--operator-text-color);
+  background-color: var(--operator-background-color);
+  @media (any-hover: hover) {
+    &:hover {
+      background-color: var(--operator-background-color-hover);
+    }
+  }
+
+  &:active {
+    background-color: var(--operator-background-color-active);
+  }
+}

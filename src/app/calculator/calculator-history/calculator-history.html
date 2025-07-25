@@ -1,0 +1,11 @@
+<div class="history" [class.show]="visible()">
+  @if (entries().length === 0) {
+    <p class="no-history-message">There's no history yet.</p>
+  }
+  @for (entry of entries(); track entry.id) {
+    <div class="entry">
+      <div class="expression">{{ entry.expression }}</div>
+      <div class="result">{{ entry.result }}</div>
+    </div>
+  }
+</div>
