@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
-import { Calculator } from './calculator/calculator';
-
+// eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
   selector: 'qa-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
-  imports: [Calculator],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [RouterOutlet]
 })
 export class App {}

@@ -14,7 +14,7 @@ import { CalculatorTopbar } from './calculator-topbar/calculator-topbar';
   imports: [CalculatorHistory, CalculatorKeypad, CalculatorScreen, CalculatorTopbar],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Calculator {
+export default class Calculator {
   protected readonly themeStore = inject(ThemeStore);
 
   protected readonly currentState = signal<CalculatorState>('INITIAL');
