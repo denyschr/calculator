@@ -3,26 +3,22 @@
   "version": 1,
   "cli": {
     "packageManager": "pnpm",
-    "schematicCollections": [
-      "angular-eslint"
-    ]
+    "schematicCollections": ["angular-eslint"]
   },
   "newProjectRoot": "projects",
   "projects": {
-    "quick-apps": {
+    "calculator": {
       "projectType": "application",
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
-      "prefix": "qa",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -30,9 +26,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ]
+            "styles": ["src/styles.css"]
           },
           "configurations": {
             "production": {
@@ -62,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "quick-apps:build:production"
+              "buildTarget": "calculator:build:production"
             },
             "development": {
-              "buildTarget": "quick-apps:build:development"
+              "buildTarget": "calculator:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,10 +70,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               {
@@ -87,19 +78,14 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "styles": ["src/styles.css"],
             "karmaConfig": "karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }

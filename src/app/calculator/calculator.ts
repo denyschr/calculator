@@ -8,7 +8,7 @@ import { CalculatorScreen } from './calculator-screen/calculator-screen';
 import { CalculatorTopbar } from './calculator-topbar/calculator-topbar';
 
 @Component({
-  selector: 'qa-calculator',
+  selector: 'app-calculator',
   templateUrl: './calculator.html',
   styleUrl: './calculator.css',
   imports: [CalculatorHistory, CalculatorKeypad, CalculatorScreen, CalculatorTopbar],

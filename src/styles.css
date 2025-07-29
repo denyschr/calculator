@@ -113,8 +113,17 @@ button {
   }
 }
 
+/* Variables */
+
 /* Global */
 body {
   font-family: system-ui, sans-serif;
   font-weight: 400;
+}
+
+.wrapper {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  padding: 0.5rem;
 }

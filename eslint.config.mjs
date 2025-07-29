@@ -44,7 +44,7 @@ export default [
           'error',
           {
             type: 'element',
-            prefix: 'qa',
+            prefix: 'app',
             style: 'kebab-case'
           }
         ],
@@ -52,7 +52,7 @@ export default [
           'error',
           {
             type: 'attribute',
-            prefix: 'qa',
+            prefix: 'app',
             style: 'camelCase'
           }
         ],

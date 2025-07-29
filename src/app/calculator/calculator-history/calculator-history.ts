@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { HistoryEntry } from '../types';
 
 @Component({
-  selector: 'qa-calculator-history',
+  selector: 'app-calculator-history',
   templateUrl: './calculator-history.html',
   styleUrl: './calculator-history.css',
   changeDetection: ChangeDetectionStrategy.OnPush

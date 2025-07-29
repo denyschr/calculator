@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+
+import Calculator from './calculator/calculator';
 
 // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
 @Component({
-  selector: 'qa-root',
+  selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
-  imports: [RouterOutlet]
+  imports: [Calculator]
 })
 export class App {}

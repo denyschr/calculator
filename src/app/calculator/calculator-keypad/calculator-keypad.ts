@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 import { Digit, Operator } from '../types';
 
 @Component({
-  selector: 'qa-calculator-keypad',
+  selector: 'app-calculator-keypad',
   templateUrl: './calculator-keypad.html',
   styleUrl: './calculator-keypad.css',
   host: {

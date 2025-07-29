@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 import { ThemeSwitcher } from '../theme/theme-switcher';
 
 @Component({
-  selector: 'qa-calculator-topbar',
+  selector: 'app-calculator-topbar',
   templateUrl: './calculator-topbar.html',
   styleUrl: './calculator-topbar.css',
   imports: [ThemeSwitcher],

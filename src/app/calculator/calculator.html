@@ -2,11 +2,11 @@
   <div class="calculator" [class.dark]="themeStore.darkMode()">
     <div class="overlay" [class.show]="historyVisible()" (click)="historyVisible.set(false)"></div>
 
-    <qa-calculator-topbar (historyToggled)="toggleHistory()" />
+    <app-calculator-topbar (historyToggled)="toggleHistory()" />
 
-    <qa-calculator-screen [expression]="expression()" [result]="display()" />
+    <app-calculator-screen [expression]="expression()" [result]="display()" />
 
-    <qa-calculator-keypad
+    <app-calculator-keypad
       (digitEntered)="enterDigit($event)"
       (operatorEntered)="enterOperator($event)"
       (dotEntered)="enterDot()"
@@ -17,6 +17,6 @@
       (deleted)="deleteEntry()"
     />
 
-    <qa-calculator-history [visible]="historyVisible()" [entries]="history()" />
+    <app-calculator-history [visible]="historyVisible()" [entries]="history()" />
   </div>
 </div>
